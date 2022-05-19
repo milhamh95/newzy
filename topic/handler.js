@@ -1,8 +1,15 @@
 const topicStorage = require('./storage')
 
-async function createTopic() {
+async function createTopic(request, reply) {
     topicStorage.createTopic()
-    return
+    reply
+        .code(200)
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send({
+            "id": 1,
+            "name": "sport",
+            "description": "sport tag"
+        })
 }
 
 async function updateTopic() {
