@@ -44,7 +44,6 @@ async function getTopic() {
 async function deleteTopic(request, reply) {
     const id = request.params.id
     const { res, err } = await topicStorage.deleteTopic(id)
-    console.log(err)
     if (err) {
         return reply.status(500).send({
             message: "failed to delete a topic"

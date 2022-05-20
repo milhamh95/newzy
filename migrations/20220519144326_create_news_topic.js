@@ -19,7 +19,7 @@ exports.up = function (knex) {
         createTable("news_topic", table => {
             table.increments("id").notNullable()
             table.integer("news_id").references("id").inTable("news")
-            table.integer("topic_id").references("id").inTable("topic")
+            table.integer("topic_id").references("id").inTable("topic").onDelete('SET NULL')
         })
 };
 
