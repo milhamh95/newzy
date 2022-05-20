@@ -1,5 +1,4 @@
 const { Model } = require('objection')
-const Topic = require('../topic/model')
 const knex = require('../db/db')
 
 Model.knex(knex)
@@ -10,6 +9,7 @@ class NewsModel extends Model {
     }
 
     static get relationMappings() {
+        const Topic = require('../topic/model')
         return {
             topic: {
                 modelClass: Topic,

@@ -1,18 +1,29 @@
 const newsModel = require('./model')
+const topicModel = require('../topic/model')
 
-// async function createNews(newsReq) {
-//     try {
-//         const topics = await topicModel.query().findByIds(newsReq.topics)
-//         if (topics.length === 0) {
-//             return "topics is not found"
-//         }
+async function createNews(newsReq) {
+    try {
+        const topics = await topicModel.query().findByIds(newsReq.topics)
+        if (topics.length === 0) {
+            throw new Error("topics are not found")
 
-//         const news = await newsModel.relatedQuery('topic').for()
+        }
+        const news = await topicModel.relatedQuery('news')
+            .for(newsReq.topics)
+            .insert({
+                title: newsReq.title,
+                content: newsReq.content,
+                slug: newsReq.slug,
+                status: newsReq.status,
+            })
 
-//     } catch (err) {
-//         return { err }
-//     }
-// }
+        return { news }
+
+    } catch (err) {
+        console.log(err)
+        return { err }
+    }
+}
 
 async function deleteNews(id) {
     try {
@@ -29,5 +40,6 @@ async function deleteNews(id) {
 }
 
 module.exports = {
+    createNews,
     deleteNews,
 }
