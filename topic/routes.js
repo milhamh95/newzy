@@ -7,7 +7,10 @@ async function routes(fastify) {
         handler: topicHandler.createTopic,
     })
     fastify.get('/topic', topicHandler.getTopic)
-    fastify.put('/topic/:id', topicHandler.updateTopic)
+    fastify.put('/topic/:id', {
+        schema: topicReqResSchema.updateTopicSchema,
+        handler: topicHandler.updateTopic,
+    })
     fastify.delete('/topic/:id', topicHandler.deleteTopic)
 }
 

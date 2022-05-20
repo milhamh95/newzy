@@ -1,5 +1,4 @@
 const topicStorage = require('./storage')
-const topicModel = require('./model')
 
 async function createTopic(request, reply) {
     const topic = request.body
@@ -64,7 +63,7 @@ async function getTopic(request, reply) {
 
 async function deleteTopic(request, reply) {
     const id = request.params.id
-    const { res, err } = topicStorage.deleteTopic(id)
+    const { res, err } = await topicStorage.deleteTopic(id)
     if (err) {
         return reply.status(500).send({
             message: "failed to delete a topic"
