@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=newzy
+      - POSTGRES_PASSWORD=newzy
+      - POSTGRES_DB=newzy
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
