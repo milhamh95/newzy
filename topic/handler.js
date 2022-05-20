@@ -1,15 +1,19 @@
 const topicStorage = require('./storage')
 
 async function createTopic(request, reply) {
-    topicStorage.createTopic()
-    reply
-        .code(200)
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send({
-            "id": 1,
-            "name": "sport",
-            "description": "sport tag"
-        })
+    const topic = request.body
+    res = await topicStorage.createTopic(topic)
+    // if (err != null) {
+    //     return reply.status(500).send({
+    //         message: "failed to create a new topic",
+    //     })
+    // }
+
+    console.log(res)
+    return reply.status(200).send({
+        message: "success",
+    })
+
 }
 
 async function updateTopic() {

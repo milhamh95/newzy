@@ -1,6 +1,7 @@
 const fastify = require('fastify')({ logger: true })
 const routes = require('./topic/routes')
 
+
 fastify.register(routes.routes)
 
 fastify.get('/', async (request, reply) => {

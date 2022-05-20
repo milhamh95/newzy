@@ -1,13 +1,16 @@
-let topicData = [
-    {
-        "id": 1,
-        "name": "sport",
-        "description": "sport tag"
-    },
-]
+const topicModel = require('./model')
 
-async function createTopic() {
-    return
+async function createTopic(topicReq) {
+    try {
+        let topic = await topicModel.query().insert({
+            name: topicReq.name,
+            description: topicReq.description,
+        })
+
+        return topic
+    } catch (err) {
+        return err
+    }
 }
 
 async function updateTopic() {

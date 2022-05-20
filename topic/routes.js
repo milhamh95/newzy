@@ -1,7 +1,11 @@
 const topicHandler = require('./handler')
+const topicReqResSchema = require('./schema')
 
 async function routes(fastify) {
-    fastify.post('/topic', topicHandler.createTopic)
+    fastify.post('/topic', {
+        schema: topicReqResSchema.insertTopicSchema,
+        handler: topicHandler.createTopic,
+    })
     fastify.get('/topic', topicHandler.getTopic)
     fastify.put('/topic/:id', topicHandler.updateTopic)
     fastify.delete('/topic/:id', topicHandler.deleteTopic)

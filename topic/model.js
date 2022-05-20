@@ -1,5 +1,8 @@
 const { Model } = require('objection')
 const News = require('../news/model')
+const knex = require('../db/db')
+
+Model.knex(knex)
 
 class TopicModel extends Model {
     static get tableName() {
