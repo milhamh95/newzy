@@ -1,8 +1,10 @@
 const fastify = require('fastify')({ logger: true })
-const routes = require('./topic/routes')
+const topicRoutes = require('./topic/routes')
+const newsRoutes = require('./news/routes')
 
 
-fastify.register(routes.routes)
+fastify.register(topicRoutes.routes)
+fastify.register(newsRoutes.routes)
 
 fastify.get('/', async (request, reply) => {
     return { hello: 'world' }

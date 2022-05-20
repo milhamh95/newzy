@@ -17,8 +17,7 @@ exports.up = function (knex) {
             table.text("description")
         }).
         createTable("news_topic", table => {
-            table.increments("id").notNullable()
-            table.integer("news_id").references("id").inTable("news")
+            table.integer("news_id").references("id").inTable("news").onDelete('CASCADE')
             table.integer("topic_id").references("id").inTable("topic").onDelete('SET NULL')
         })
 };

@@ -43,7 +43,6 @@ async function getTopic(ids) {
 async function deleteTopic(id) {
     try {
         let numDeleted = await topicModel.query().deleteById(id)
-        console.log(numDeleted)
 
         if (numDeleted === 0) {
             throw new Error("topic is not found")

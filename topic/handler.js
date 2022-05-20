@@ -43,7 +43,6 @@ async function getTopic(request, reply) {
     if (ids !== undefined) {
         tmpIds = ids.split(",")
         for (let id of tmpIds) {
-            console.log(parseInt(id))
             newIds.push(parseInt(id))
         }
     }
@@ -63,6 +62,12 @@ async function getTopic(request, reply) {
 
 async function deleteTopic(request, reply) {
     const id = request.params.id
+    if (id === 0) {
+        return reply.status(500).send({
+            message: "invalid id"
+        })
+    }
+
     const { res, err } = await topicStorage.deleteTopic(id)
     if (err) {
         return reply.status(500).send({
