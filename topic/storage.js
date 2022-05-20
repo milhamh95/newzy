@@ -7,9 +7,9 @@ async function createTopic(topicReq) {
             description: topicReq.description,
         })
 
-        return topic
+        return [topic, null];
     } catch (err) {
-        return err
+        return [null, err];
     }
 }
 

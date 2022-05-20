@@ -2,16 +2,16 @@ const topicStorage = require('./storage')
 
 async function createTopic(request, reply) {
     const topic = request.body
-    res = await topicStorage.createTopic(topic)
-    // if (err != null) {
-    //     return reply.status(500).send({
-    //         message: "failed to create a new topic",
-    //     })
-    // }
+    const [res, err] = await topicStorage.createTopic(topic)
+    if (err != null) {
+        return reply.status(500).send({
+            message: "failed to create a new topic",
+        })
+    }
 
-    console.log(res)
     return reply.status(200).send({
         message: "success",
+        data: res,
     })
 
 }
