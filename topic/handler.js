@@ -16,9 +16,22 @@ async function createTopic(request, reply) {
 
 }
 
-async function updateTopic() {
-    topicStorage.updateTopic()
-    return
+async function updateTopic(request, reply) {
+    const id = request.params.id
+    const topic = request.body
+
+    const { res, err } = topicStorage.updateTopic(id, topic)
+    if (err) {
+        return reply.status(500).send({
+            message: "failed to update a topic",
+        })
+    }
+
+    topic.id = id
+    return reply.status(200).send({
+        message: "success",
+        data: topic,
+    })
 }
 
 
@@ -31,6 +44,7 @@ async function getTopic() {
 async function deleteTopic(request, reply) {
     const id = request.params.id
     const { res, err } = await topicStorage.deleteTopic(id)
+    console.log(err)
     if (err) {
         return reply.status(500).send({
             message: "failed to delete a topic"

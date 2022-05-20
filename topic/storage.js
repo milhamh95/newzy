@@ -13,8 +13,17 @@ async function createTopic(topicReq) {
     }
 }
 
-async function updateTopic() {
-    return
+async function updateTopic(id, topic) {
+    try {
+        let numUpdated = await topicModel.query().findById(id).patch({
+            name: topic.name,
+            description: topic.description,
+        })
+
+        return { numUpdated }
+    } catch (err) {
+        return { err }
+    }
 }
 
 async function getTopic() {
