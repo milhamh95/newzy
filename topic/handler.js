@@ -1,4 +1,5 @@
 const topicStorage = require('./storage')
+const topicModel = require('./model')
 
 async function createTopic(request, reply) {
     const topic = request.body
@@ -20,7 +21,7 @@ async function updateTopic(request, reply) {
     const id = request.params.id
     const topic = request.body
 
-    const { res, err } = topicStorage.updateTopic(id, topic)
+    const { res, err } = await topicStorage.updateTopic(id, topic)
     if (err) {
         return reply.status(500).send({
             message: "failed to update a topic",
@@ -35,15 +36,35 @@ async function updateTopic(request, reply) {
 }
 
 
-async function getTopic() {
-    topicStorage.getTopic()
-    return
+async function getTopic(request, reply) {
+    const ids = request.query.ids
+    let tmpIds = []
+    let newIds = []
+
+    if (ids !== undefined) {
+        tmpIds = ids.split(",")
+        for (let id of tmpIds) {
+            console.log(parseInt(id))
+            newIds.push(parseInt(id))
+        }
+    }
+
+    const { topics, err } = await topicStorage.getTopic(newIds)
+    if (err) {
+        return reply.status(500).send({
+            message: "failed to get topic"
+        })
+    }
+    return reply.status(200).send({
+        message: "success",
+        data: topics,
+    })
 }
 
 
 async function deleteTopic(request, reply) {
     const id = request.params.id
-    const { res, err } = await topicStorage.deleteTopic(id)
+    const { res, err } = topicStorage.deleteTopic(id)
     if (err) {
         return reply.status(500).send({
             message: "failed to delete a topic"

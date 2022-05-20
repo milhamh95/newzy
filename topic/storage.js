@@ -26,8 +26,18 @@ async function updateTopic(id, topic) {
     }
 }
 
-async function getTopic() {
-    return
+async function getTopic(ids) {
+    try {
+        if (Array.isArray(ids) && ids.length !== 0) {
+            const topics = await topicModel.query().findByIds(ids)
+            return { topics }
+        }
+
+        const topics = await topicModel.query()
+        return { topics }
+    } catch (err) {
+        return { err }
+    }
 }
 
 async function deleteTopic(id) {
