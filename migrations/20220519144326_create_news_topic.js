@@ -6,15 +6,15 @@ exports.up = function (knex) {
     return knex.schema.
         createTable("news", table => {
             table.increments("id").notNullable();
-            table.string("title");
-            table.string("content");
-            table.string("slug");
+            table.text("title");
+            table.text("content");
+            table.text("slug");
             table.enum("status", ['draft', 'published', 'deleted']);
         }).
         createTable("topic", table => {
             table.increments("id").notNullable()
-            table.string("name")
-            table.string("description")
+            table.text("name")
+            table.text("description")
         }).
         createTable("news_topic", table => {
             table.increments("id").notNullable()
