@@ -7,9 +7,9 @@ async function createTopic(topicReq) {
             description: topicReq.description,
         })
 
-        return [topic, null];
+        return { topic };
     } catch (err) {
-        return [null, err];
+        return { err };
     }
 }
 
@@ -21,8 +21,13 @@ async function getTopic() {
     return
 }
 
-async function deleteTopic() {
-    return
+async function deleteTopic(id) {
+    try {
+        let numDeleted = await topicModel.query().deleteById(id)
+        return { numDeleted };
+    } catch (err) {
+        return { err }
+    }
 }
 
 module.exports = {
