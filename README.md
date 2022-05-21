@@ -21,3 +21,53 @@ Newzy is a news backend API.
 | GET | /topic | Get topics |
 | UPDATE | /topic/:id | Update a topic |
 | DELETE | /topic/:id | Delete a topic |
+
+## How To Install Package Dependency
+
+- Please run
+
+```sh
+npm install
+```
+
+## How To Run
+
+- Make sure you have installed postgres in your local
+- Or you can use docker
+
+```sh
+docker-compose up -d db
+```
+
+- Run migration and seed db using
+
+```
+knex migrate:latest
+knex seed:run
+```
+
+- Start server by running
+
+```sh
+npm start
+```
+
+## How To Test
+
+### Unit Test
+
+Please run
+
+```sh
+npm test
+```
+
+### Integration Test
+
+- Please maske sure re-migrate and re-seed db
+
+```sh
+knex migrate:down
+knex migrate:latest
+knex seed:run
+```

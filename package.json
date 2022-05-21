@@ -1,15 +1,11 @@
 {
   "dependencies": {
-    "chai": "^4.3.6",
     "dotenv": "^16.0.1",
     "fastify": "^3.29.0",
     "knex": "^2.0.0",
-    "mocha": "^10.0.0",
-    "nodemon": "^2.0.16",
     "objection": "^3.0.1",
     "pg": "^8.7.3",
-    "save": "^2.5.0",
-    "sinon": "^14.0.0"
+    "save": "^2.5.0"
   },
   "scripts": {
     "start": "nodemon server.js",
@@ -31,7 +27,11 @@
   },
   "homepage": "https://github.com/milhamh95/newzy#readme",
   "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.16",
     "pino-pretty": "^7.6.1",
+    "sinon": "^14.0.0",
     "supertest": "^6.2.3",
     "tap": "^16.2.0"
   }
