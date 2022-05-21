@@ -10,6 +10,12 @@ const insertTopicSchema = {
 }
 
 const updateTopicSchema = {
+    params: {
+        type: 'object',
+        properties: {
+            id: { type: 'integer' }
+        }
+    },
     body: {
         type: 'object',
         required: ['name'],
@@ -20,7 +26,27 @@ const updateTopicSchema = {
     }
 }
 
+const deleteTopicSchema = {
+    params: {
+        type: 'object',
+        properties: {
+            id: { type: 'integer' }
+        }
+    },
+}
+
+const getTopicSchema = {
+    params: {
+        type: 'object',
+        properties: {
+            ids: { type: 'string' },
+        }
+    },
+}
+
 module.exports = {
     insertTopicSchema,
     updateTopicSchema,
+    getTopicSchema,
+    deleteTopicSchema,
 }
