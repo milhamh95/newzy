@@ -83,10 +83,16 @@ npm test
 
 ### Integration Test
 
-- Please maske sure re-migrate and re-seed db
+- Please make sure re-migrate and re-seed db
 
 ```sh
 knex migrate:down
 knex migrate:latest
 knex seed:run
+```
+
+- Then run
+
+```sh
+npm run integration_test
 ```
