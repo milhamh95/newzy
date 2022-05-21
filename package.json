@@ -8,11 +8,14 @@
     "objection": "^3.0.1",
     "pg": "^8.7.3",
     "save": "^2.5.0",
-    "sinon": "^14.0.0"
+    "sinon": "^14.0.0",
+    "supertest": "^6.2.3",
+    "tap": "^16.2.0"
   },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "mocha \"test/**/*.test.js\""
+    "test": "mocha \"test/unit/**/*.test.js\"",
+    "integration-test": "mocha \"test/integration/**/*.test.js\""
   },
   "name": "newzy",
   "description": "Newzy is a news backend API.",

@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { stub } = require("sinon");
 
-const topicStorage = require('../../topic/storage')
+const topicStorage = require('../../../topic/storage')
 
 let topicsData = [
     {

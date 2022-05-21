@@ -42,7 +42,7 @@ async function updateNews(id, newsReq) {
                 throw new Error("topics are not found")
             }
 
-            await knex.raw(`delete from news_topic where news_id = ${id}`).transacting(trx)
+            await knex.raw(`delete from news_topic where news_id = ?`, id).transacting(trx)
 
             let newsTopicData = []
             for (let topic of newsReq.topics) {
@@ -80,12 +80,13 @@ async function updateNews(id, newsReq) {
 
 async function getNews(ids, topicParam, status) {
     try {
-        if (topicParam !== "") {
+        if (topicParam !== undefined && topicParam !== "") {
             const topic = await topicModel.query().where("name", topicParam)
             if (topic.id === 0) {
                 throw new Error("topic is not found")
             }
 
+            let topicId = topic[0].id
             const knex = topicModel.knex()
 
             let query = `select news.*,
@@ -93,9 +94,10 @@ async function getNews(ids, topicParam, status) {
             from news_topic
             join news on news.id = news_topic.news_id
             join topic on topic.id = news_topic.topic_id
-            WHERE topic.id = ${topic[0].id}`
+            WHERE topic.id = ?
+            order by news.id desc;`
 
-            const res = await knex.raw(query)
+            const res = await knex.raw(query, topicId)
 
             let news = []
             for (item of res.rows) {
@@ -118,23 +120,27 @@ async function getNews(ids, topicParam, status) {
             return { news }
         }
 
-        if (status !== "") {
+        if (status !== undefined && status !== "") {
             const news = await newsModel.query()
                 .withGraphFetched('topic')
                 .where("status", status)
+                .orderBy('id', 'desc')
             return { news }
         }
 
         if (Array.isArray(ids) && ids.length !== 0) {
+            console.log("ids:", ids)
             const news = await newsModel.query()
                 .withGraphFetched('topic')
-                .findByIds(ids)
+                .whereIn('id', ids)
+
             return { news }
         }
 
         const news = await newsModel.query().withGraphFetched('topic').orderBy('id', 'desc')
         return { news }
     } catch (err) {
+        console.log(err)
         return { err }
     }
 }
