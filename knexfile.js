@@ -10,7 +10,7 @@ module.exports = {
     connection: {
       database: process.env.DBNAME || "newzy",
       user: process.env.DBUSER || "newzy",
-      password: process.env.DBPASSWORD || "newzy-password",
+      password: process.env.DBPASSWORD || "newzy",
       host: process.env.DBHOST || "127.0.0.1",
     },
     pool: {

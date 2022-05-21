@@ -22,6 +22,10 @@ Newzy is a news backend API.
 | UPDATE | /topic/:id | Update a topic |
 | DELETE | /topic/:id | Delete a topic |
 
+### Postman Collection
+
+You can test newzy api using postman by imporing `newzy.postman_collection.json`
+
 ## How To Install Package Dependency
 
 - Please run
