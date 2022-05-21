@@ -24,7 +24,12 @@ Newzy is a news backend API.
 
 ### Postman Collection
 
-You can test newzy api using postman by imporing `newzy.postman_collection.json`
+You can test newzy api using postman by importing
+
+```sh
+newzy.postman_collection.json
+newzy.postman_environment.json
+```
 
 ## How To Install Package Dependency
 
@@ -45,7 +50,7 @@ docker-compose up -d db
 
 - Run migration and seed db using
 
-```
+```sh
 knex migrate:latest
 knex seed:run
 ```
@@ -54,6 +59,16 @@ knex seed:run
 
 ```sh
 npm start
+```
+
+- Access `localhost:3000` in your browser
+
+## How To Access
+
+- To access this API, please access
+
+```sh
+https://newzy-rho.vercel.app/
 ```
 
 ## How To Test
