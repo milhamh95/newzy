@@ -3,7 +3,7 @@ const newsReqResSchema = require('./schema')
 
 async function routes(fastify) {
     fastify.post('/news', {
-        schema: newsReqResSchema.insertNewsSchema,
+        // schema: newsReqResSchema.insertNewsSchema,
         handler: newsHandler.createNews,
     })
     fastify.get('/news', newsHandler.getNews)

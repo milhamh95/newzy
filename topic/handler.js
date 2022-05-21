@@ -20,6 +20,12 @@ async function updateTopic(request, reply) {
     const id = request.params.id
     const topic = request.body
 
+    if (id === 0) {
+        return reply.status(400).send({
+            message: "invalid request",
+        })
+    }
+
     const { res, err } = await topicStorage.updateTopic(id, topic)
     if (err) {
         return reply.status(500).send({
@@ -63,12 +69,12 @@ async function getTopic(request, reply) {
 async function deleteTopic(request, reply) {
     const id = request.params.id
     if (id === 0) {
-        return reply.status(500).send({
+        return reply.status(400).send({
             message: "invalid id"
         })
     }
 
-    const { res, err } = await topicStorage.deleteTopic(id)
+    const { numDeleted, err } = await topicStorage.deleteTopic(id)
     if (err) {
         return reply.status(500).send({
             message: "failed to delete a topic"

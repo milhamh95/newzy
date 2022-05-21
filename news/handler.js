@@ -1,21 +1,21 @@
 const newsStorage = require('./storage')
 
 async function createNews(request, reply) {
-    const news = request.body
+    const newsReq = request.body
 
-    if (!Array.isArray(news.topics)) {
+    if (!Array.isArray(newsReq.topics)) {
         return reply.status(400).send({
             message: "invalid request",
         })
     }
 
-    if (news.topics.length === 0) {
+    if (newsReq.topics.length === 0) {
         return reply.status(400).send({
             message: "invalid request",
         })
     }
 
-    const { res, err } = await newsStorage.createNews(news)
+    const { news, err } = await newsStorage.createNews(newsReq)
     if (err) {
         return reply.status(500).send({
             message: "failed to create a new news",
@@ -24,16 +24,34 @@ async function createNews(request, reply) {
 
     return reply.status(201).send({
         message: "success",
-        data: res,
+        data: news,
     })
 
 }
 
 async function updateNews(request, reply) {
     const id = request.params.id
-    const news = request.body
+    const newsReq = request.body
 
-    const { res, err } = await newsStorage.updateNews(id, news)
+    if (!Array.isArray(newsReq.topics)) {
+        return reply.status(400).send({
+            message: "invalid request",
+        })
+    }
+
+    if (newsReq.topics.length === 0) {
+        return reply.status(400).send({
+            message: "invalid request",
+        })
+    }
+
+    if (id === 0) {
+        return reply.status(400).send({
+            message: "invalid id",
+        })
+    }
+
+    const { news, err } = await newsStorage.updateNews(id, newsReq)
     if (err) {
         return reply.status(500).send({
             message: "failed to update a news",
@@ -56,12 +74,13 @@ async function getNews(request, reply) {
     if (ids !== undefined) {
         tmpIds = ids.split(",")
         for (let id of tmpIds) {
-            console.log(parseInt(id))
             newIds.push(parseInt(id))
         }
     }
+    const topic = request.query.topic
+    const status = request.query.status
 
-    const { Newss, err } = await newsStorage.getNews(newIds)
+    const { news, err } = await newsStorage.getNews(newIds, topic, status)
     if (err) {
         return reply.status(500).send({
             message: "failed to get news"
@@ -69,7 +88,7 @@ async function getNews(request, reply) {
     }
     return reply.status(200).send({
         message: "success",
-        data: Newss,
+        data: news,
     })
 }
 

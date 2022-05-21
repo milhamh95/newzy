@@ -1,4 +1,4 @@
-const { assert } = require("chai");
+const { expect } = require("chai");
 const { stub } = require("sinon");
 
 const topicStorage = require('../../topic/storage')
@@ -23,13 +23,14 @@ describe('test topic storage', function () {
 
     describe("get topic", function () {
         it("success", async function () {
-            const getTopicFn = stub(topicStorage, "getTopic").returns(topics)
+            stub(topicStorage, "getTopic").returns(topics)
 
-            const { res, err } = topicStorage.getTopic
-            console.log(res)
-            assert.equal(res, topics)
-            // assert.deepEqual(res, topics)
-            // assert.isDefined(err)
+            const { res, err } = await topicStorage.getTopic([1])
+
+            console.log("res", res)
+            console.log("err", err)
+
+            expect(res).to.be.deep.equal(topics)
         })
     })
 })

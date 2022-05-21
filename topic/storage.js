@@ -33,7 +33,7 @@ async function getTopic(ids) {
             return { topics }
         }
 
-        const topics = await topicModel.query()
+        const topics = await topicModel.query().orderBy('id', 'desc')
         return { topics }
     } catch (err) {
         return { err }
