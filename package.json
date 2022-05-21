@@ -4,12 +4,14 @@
     "fastify": "^3.29.0",
     "knex": "^2.0.0",
     "mocha": "^10.0.0",
+    "nodemon": "^2.0.16",
     "objection": "^3.0.1",
     "pg": "^8.7.3",
+    "save": "^2.5.0",
     "sinon": "^14.0.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "mocha \"test/**/*.test.js\""
   },
   "name": "newzy",
