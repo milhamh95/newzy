@@ -3,7 +3,7 @@ const { stub } = require("sinon");
 
 const topicStorage = require('../../topic/storage')
 
-let topics = [
+let topicsData = [
     {
         id: 1,
         name: "sport",
@@ -16,21 +16,73 @@ let topics = [
     },
 ]
 
-describe('test topic storage', function () {
+describe('get topic storage', function () {
     afterEach(() => {
         topicStorage.getTopic.restore()
     })
 
     describe("get topic", function () {
         it("success", async function () {
-            stub(topicStorage, "getTopic").returns(topics)
+            stub(topicStorage, "getTopic").returns(topicsData)
 
-            const { res, err } = await topicStorage.getTopic([1])
+            const topics = await topicStorage.getTopic([1])
 
-            console.log("res", res)
-            console.log("err", err)
-
-            expect(res).to.be.deep.equal(topics)
+            expect(topics).to.be.deep.equal(topicsData)
         })
     })
 })
+
+describe("insert topic storage", function () {
+    afterEach(() => {
+        topicStorage.createTopic.restore()
+    })
+
+    it("success", async function () {
+        stub(topicStorage, "createTopic").returns(topicsData[0])
+
+        const topic = await topicStorage.createTopic(topicsData[0])
+
+        expect(topic).to.be.deep.equal(topicsData[0])
+    })
+})
+
+
+describe("delete topic storage", function () {
+    afterEach(() => {
+        topicStorage.deleteTopic.restore()
+    })
+
+    it("success", async function () {
+        stub(topicStorage, "deleteTopic").returns(1)
+
+        const res = await topicStorage.deleteTopic(1)
+
+        expect(res).to.be.equal(1)
+    })
+})
+
+describe("update topic storage", function () {
+    afterEach(() => {
+        topicStorage.updateTopic.restore()
+    })
+
+    it("success", async function () {
+        let expectedTopic = {
+            id: 1,
+            name: "computer",
+            description: "computer tag",
+        }
+
+        let newTopic = {
+            name: "computer",
+            description: "computer tag",
+        }
+
+        stub(topicStorage, "updateTopic").returns(expectedTopic)
+
+        const res = await topicStorage.updateTopic(expectedTopic.id, newTopic)
+
+        expect(res).to.be.equal(expectedTopic)
+    })
+})
+

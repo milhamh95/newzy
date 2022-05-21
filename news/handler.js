@@ -95,10 +95,7 @@ async function getNews(request, reply) {
 
 async function deleteNews(request, reply) {
     const id = request.params.id
-    console.log(id)
     const { res, err } = await newsStorage.deleteNews(id)
-    console.log("===err===")
-    console.log(err)
     if (err) {
         return reply.status(500).send({
             message: "failed to delete a news"

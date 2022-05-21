@@ -74,7 +74,6 @@ async function updateNews(id, newsReq) {
 
         return { news }
     } catch (err) {
-        console.log(err)
         return { err }
     }
 }
