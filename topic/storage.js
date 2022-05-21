@@ -9,6 +9,7 @@ async function createTopic(topicReq) {
 
         return { topic };
     } catch (err) {
+        console.log(err)
         return { err };
     }
 }

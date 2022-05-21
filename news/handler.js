@@ -1,4 +1,6 @@
 const newsStorage = require('./storage')
+const log = require('loglevel');
+
 
 async function createNews(request, reply) {
     const newsReq = request.body
@@ -17,6 +19,7 @@ async function createNews(request, reply) {
 
     const { news, err } = await newsStorage.createNews(newsReq)
     if (err) {
+        log.error(`news handler: ${err}`)
         return reply.status(500).send({
             message: "failed to create a new news",
         })
@@ -53,6 +56,7 @@ async function updateNews(request, reply) {
 
     const { news, err } = await newsStorage.updateNews(id, newsReq)
     if (err) {
+        log.error(`news handler: ${err}`)
         return reply.status(500).send({
             message: "failed to update a news",
         })
@@ -82,6 +86,7 @@ async function getNews(request, reply) {
 
     const { news, err } = await newsStorage.getNews(newIds, topic, status)
     if (err) {
+        log.error(`news handler: ${err}`)
         return reply.status(500).send({
             message: "failed to get news"
         })
@@ -97,6 +102,7 @@ async function deleteNews(request, reply) {
     const id = request.params.id
     const { res, err } = await newsStorage.deleteNews(id)
     if (err) {
+        log.error(`news handler: ${err}`)
         return reply.status(500).send({
             message: "failed to delete a news"
         })

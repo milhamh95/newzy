@@ -1,9 +1,12 @@
 const topicStorage = require('./storage')
+const log = require('loglevel');
+
 
 async function createTopic(request, reply) {
     const topicReq = request.body
     const { topic, err } = await topicStorage.createTopic(topicReq)
     if (err) {
+        log.error(`topic handler: ${err}`)
         return reply.status(500).send({
             message: "failed to create a new topic",
         })
@@ -28,6 +31,7 @@ async function updateTopic(request, reply) {
 
     const { res, err } = await topicStorage.updateTopic(id, topic)
     if (err) {
+        log.error(`topic handler: ${err}`)
         return reply.status(500).send({
             message: "failed to update a topic",
         })
@@ -55,6 +59,7 @@ async function getTopic(request, reply) {
 
     const { topics, err } = await topicStorage.getTopic(newIds)
     if (err) {
+        log.error(`topic handler: ${err}`)
         return reply.status(500).send({
             message: "failed to get topic"
         })
@@ -76,6 +81,7 @@ async function deleteTopic(request, reply) {
 
     const { numDeleted, err } = await topicStorage.deleteTopic(id)
     if (err) {
+        log.error(`topic handler: ${err}`)
         return reply.status(500).send({
             message: err.message
         })
