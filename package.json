@@ -8,9 +8,7 @@
     "objection": "^3.0.1",
     "pg": "^8.7.3",
     "save": "^2.5.0",
-    "sinon": "^14.0.0",
-    "supertest": "^6.2.3",
-    "tap": "^16.2.0"
+    "sinon": "^14.0.0"
   },
   "scripts": {
     "start": "nodemon server.js",
@@ -30,5 +28,10 @@
   "bugs": {
     "url": "https://github.com/milhamh95/newzy/issues"
   },
-  "homepage": "https://github.com/milhamh95/newzy#readme"
+  "homepage": "https://github.com/milhamh95/newzy#readme",
+  "devDependencies": {
+    "pino-pretty": "^7.6.1",
+    "supertest": "^6.2.3",
+    "tap": "^16.2.0"
+  }
 }

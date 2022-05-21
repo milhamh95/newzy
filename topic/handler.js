@@ -77,7 +77,7 @@ async function deleteTopic(request, reply) {
     const { numDeleted, err } = await topicStorage.deleteTopic(id)
     if (err) {
         return reply.status(500).send({
-            message: "failed to delete a topic"
+            message: err.message
         })
     }
 

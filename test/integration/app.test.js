@@ -1,21 +1,22 @@
-const tap = require('tap')
 const supertest = require('supertest')
-const buildFastify = require('../../app')
+const buildFastify = require('../../app.js')
 
-tap.test('GET `/news` route', async (t) => {
-    const fastify = buildFastify({
-        logger: {
-            level: 'info',
-        },
-    })
 
-    t.teardown(() => fastify.close())
+describe('GET "/"', async function () {
+    const fastify = buildFastify()
 
     await fastify.ready()
+    it("success", async function () {
 
-    const response = await supertest(fastify.server)
-        .get('/topic')
-        .expect(200)
-        .expect('Content-Type', 'application/json; charset=utf-8')
-    t.same(response.body, { hello: 'world' })
+        const response = await supertest(fastify.server)
+            .get('/')
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+    })
+
+    after(function () {
+        fastify.close()
+    })
 })
+
+

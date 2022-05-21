@@ -1,15 +1,13 @@
 const server = require('./app')({
     logger: {
         level: 'info',
+        prettyPrint: true
     },
 })
 
-const start = async () => {
-    try {
-        await server.listen(3000)
-    } catch (err) {
-        fastify.log.error(err)
+server.listen(3000, (err, address) => {
+    if (err) {
+        server.log.error(err)
         process.exit(1)
     }
-}
-start()
+})

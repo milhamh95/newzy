@@ -8,6 +8,10 @@ function build(opts = {}) {
     app.register(topicRoutes.routes)
     app.register(newsRoutes.routes)
 
+    app.get('/', function (request, reply) {
+        return reply.status(200).send({ hello: "world" })
+    })
+
     return app
 }
 
