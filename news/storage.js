@@ -27,30 +27,54 @@ async function createNews(newsReq) {
 }
 
 async function updateNews(id, newsReq) {
+    const knex = newsModel.knex()
     try {
-        const topics = await topicModel.query().findByIds(newsReq.topics)
-        if (topics.length === 0) {
-            throw new Error("topics are not found")
-        }
-
-        const knex = topicModel.knex()
-        const newsTopicDeletedRes = await knex.raw(`delete from news_topic where news_id = ${id}`)
-
-        const news = await topicModel.relatedQuery('news')
-            .for(newsReq.topics)
-            .patch({
+        const news = await knex.transaction(async trx => {
+            await newsModel.query(trx).findById(id).patch({
                 title: newsReq.title,
                 content: newsReq.content,
                 slug: newsReq.slug,
                 status: newsReq.status,
             })
-            .where('id', id)
 
-        news.topics = topics
+            const topics = await topicModel.query(trx).findByIds(newsReq.topics)
+            if (topics.length === 0) {
+                throw new Error("topics are not found")
+            }
+
+            await knex.raw(`delete from news_topic where news_id = ${id}`).transacting(trx)
+
+            let newsTopicData = []
+            for (let topic of newsReq.topics) {
+                newsTopicData.push({
+                    news_id: id,
+                    topic_id: topic,
+                })
+            }
+
+            await knex('news_topic').insert(newsTopicData).transacting(trx)
+
+            let topicNews = []
+            for (let topicData of topics) {
+                topicNews.push(
+                    {
+                        id: topicData.id,
+                        name: topicData.name,
+                        description: topicData.description,
+                    }
+                )
+            }
+
+            newsReq.id = id
+            newsReq.topics = topicNews
+            const news = newsReq
+
+            return news
+        })
 
         return { news }
-
     } catch (err) {
+        console.log(err)
         return { err }
     }
 }
