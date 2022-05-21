@@ -1,3 +1,4 @@
+require('dotenv').config()
 const fastify = require('fastify')
 const topicRoutes = require('./topic/routes')
 const newsRoutes = require('./news/routes')

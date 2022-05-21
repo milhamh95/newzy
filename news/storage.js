@@ -4,7 +4,7 @@ const topicModel = require('../topic/model')
 async function createNews(newsReq) {
     try {
         const topics = await topicModel.query().findByIds(newsReq.topics)
-        if (topics.length === 0) {
+        if (topics === undefined || topics.length === 0) {
             throw new Error("topics are not found")
 
         }
@@ -82,8 +82,9 @@ async function getNews(ids, topicParam, status) {
     try {
         if (topicParam !== undefined && topicParam !== "") {
             const topic = await topicModel.query().where("name", topicParam)
-            if (topic.id === 0) {
-                throw new Error("topic is not found")
+            if (topic === undefined || topic.length == 0) {
+                const news = []
+                return { news }
             }
 
             let topicId = topic[0].id
